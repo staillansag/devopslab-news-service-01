@@ -2,12 +2,16 @@ version: '3.8'
 
 services:
   msr-lean:
+    user: "1724:1724"
     image: ${CONTAINER_REGISTRY_URL}/${CONTAINER_IMAGE_REPOSITORY}:${CONTAINER_IMAGE_TAG}
     ports:
       - ${HOST_PORT_PREFIX}55:5555
     volumes:
       - ${HOST_MSR_LICENSE_FILE}:/tmp/license.xml
       - ./application.properties:/tmp/application.properties
+      - ../../:/mnt/project-home/
+      - ../../code/is-packages/MyNewsService/:${GUEST_IS_HOME}/packages/MyNewsService/
     environment:
       - SAG_IS_LICENSE_FILE=/tmp/license.xml
-      - ./application.properties:/tmp/application.properties
+      - SAG_IS_CONFIG_PROPERTIES=/tmp/application.properties
+
